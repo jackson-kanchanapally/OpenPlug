@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Dimensions, Alert, Platform } from 'react-native';
 import MapView from 'react-native-maps';
 import * as Location from 'expo-location';
-import { StatusBar } from 'expo-status-bar';
 
 export default function HomeScreen() {
   const [location, setLocation] = useState<Location.LocationObject | null>(null);
@@ -22,7 +21,7 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <StatusBar style="light" backgroundColor="#2E7D32" />
+    
       <View style={styles.mapContainer}>
         <MapView
           style={styles.map}
@@ -33,6 +32,7 @@ export default function HomeScreen() {
             longitudeDelta: 0.0421,
           }}
           showsUserLocation={true}
+          showsTraffic={true}
           showsMyLocationButton={true}
         />
       </View>
