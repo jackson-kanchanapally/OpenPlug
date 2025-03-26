@@ -15,7 +15,7 @@ import { StatusBar } from 'expo-status-bar';
 export default function ProfileScreen() {
   return (
     <ScrollView style={styles.container}>
-      <StatusBar style="light" backgroundColor="#2E7D32" />
+     
       
       {/* Profile Header with Background */}
       <View style={styles.headerBackground}>
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f5f5f5',
   },
   headerBackground: {
-    backgroundColor: '#2E7D32',
+    backgroundColor: '#4CAF50',
     paddingTop: Platform.OS === 'ios' ? 80 : 60,
     paddingBottom: 40,
   },
