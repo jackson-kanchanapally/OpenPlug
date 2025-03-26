@@ -174,10 +174,10 @@ export default function SignupScreen() {
       <StatusBar style="light" backgroundColor="#2E7D32" />
       
       <View style={styles.header}>
-        {/* <Image
-          source={require('../assets/images/logo.png')}
+        <Image
+          source={require('../assets/images/react-logo.png')}
           style={styles.logo}
-        /> */}
+        />
         <Text style={styles.title}>Create Account</Text>
         <Text style={styles.subtitle}>Join our charging network</Text>
       </View>
@@ -263,6 +263,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     marginBottom: 20,
+    marginTop: 5,
   },
   title: {
     fontSize: 28,
