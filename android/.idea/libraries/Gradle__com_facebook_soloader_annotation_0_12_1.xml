@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: com.facebook.soloader:annotation:0.12.1" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="com.facebook.soloader" artifactId="annotation" version="0.12.1" baseVersion="0.12.1" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.facebook.soloader/annotation/0.12.1/945ada76f62253ba8e72cbf755d0e85ea7362cfe/annotation-0.12.1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.facebook.soloader/annotation/0.12.1/af83b8d381054f8ceb6a1da75bdceb1a81e63e9e/annotation-0.12.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.facebook.soloader/annotation/0.12.1/98594019db5a6832c09c87248dfd7d72fa893a0d/annotation-0.12.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

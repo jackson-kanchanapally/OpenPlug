@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: androidx.tracing:tracing-ktx:1.2.0@aar" external-system-id="GRADLE">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/8.10.2/transforms/88ff4d5718a1652ac6768ee656ac682a/transformed/tracing-ktx-1.2.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/8.10.2/transforms/88ff4d5718a1652ac6768ee656ac682a/transformed/tracing-ktx-1.2.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/8.10.2/transforms/88ff4d5718a1652ac6768ee656ac682a/transformed/tracing-ktx-1.2.0/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.tracing/tracing-ktx/1.2.0/30cc348deac16dc20078334cd78a8ad8e852c7dd/tracing-ktx-1.2.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
