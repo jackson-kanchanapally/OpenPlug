@@ -12,7 +12,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams } from "expo-router";
 import Form from "../components/Form";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
-const API_URL = "http://192.168.7.60:3001";
+import APIManager from "@/APIManager";
 
 const ChargerListing = () => {
   const params = useLocalSearchParams();
@@ -87,23 +87,8 @@ const ChargerListing = () => {
       longitude: longitude,
     };
     try {
-      const response = await fetch(`${API_URL}/charger/add`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(newEntry),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(
-          errorData.message || `HTTP error! status: ${response.status}`
-        );
-      }
+      await APIManager.addCharger(newEntry);
       Alert.alert("Success", "Charger listing submitted successfully!");
-
       setFormValues({
         ownerName: "",
         chargerType: "",

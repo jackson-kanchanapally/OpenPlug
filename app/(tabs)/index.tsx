@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   View,
   StyleSheet,
@@ -11,7 +11,9 @@ import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FontAwesome5 } from "@expo/vector-icons";
-import axios from "axios";
+import ActionSheet from "react-native-actions-sheet";
+import APIManager from "@/APIManager";
+import ProfileActionSheet from "@/components/ProfileActionSheet";
 
 export default function HomeScreen() {
   const [location, setLocation] = useState<Location.LocationObject | null>(
@@ -21,13 +23,42 @@ export default function HomeScreen() {
     { latitude: number; longitude: number; ownerName?: string }[]
   >([]);
   const [loading, setLoading] = useState(true);
-  const [chargerData, setChargerData] = useState<any>([]);
+  const [showSheet, setShowSheet] = useState(false);
+  const actionSheetRef = useRef<ActionSheet>(null);
+  const [selectedUser, setSelectedUser] = useState<any>(null);
+
+  const handleMarkerPress = (charger: any) => {
+    setSelectedUser(charger);
+    actionSheetRef.current?.show();
+  };
+
   useEffect(() => {
     (async () => {
       try {
-        const savedLocation = await AsyncStorage.getItem("userLocation");
-        const resp = await axios.get("http://192.168.7.60:3001/charger");
-        const data = resp.data;
+        // const savedLocation = await AsyncStorage.getItem("userLocation");
+        // const resp = await axios.get("http://192.168.7.60:3001/charger");
+        // const data = resp.data;
+        // const markers = data.map((item: any) => ({
+        //   latitude:
+        //     typeof item.latitude === "string"
+        //       ? parseFloat(item.latitude)
+        //       : item.latitude,
+        //   longitude:
+        //     typeof item.longitude === "string"
+        //       ? parseFloat(item.longitude)
+        //       : item.longitude,
+        //   ownerName: item.ownerName || "Charger",
+        //   address: item.Address || "", // optional if you use description
+        //   chargerType: item.chargerType || "", // optional if you use description
+        // }));
+
+        // setChargers(markers);
+        // setChargerData(data);
+
+        // if (savedLocation) {
+        //   setLocation(JSON.parse(savedLocation));
+        // }
+        const data = await APIManager.getChargers();
         const markers = data.map((item: any) => ({
           latitude:
             typeof item.latitude === "string"
@@ -38,23 +69,18 @@ export default function HomeScreen() {
               ? parseFloat(item.longitude)
               : item.longitude,
           ownerName: item.ownerName || "Charger",
-          address: item.Address || "", // optional if you use description
-          chargerType: item.chargerType || "", // optional if you use description
+          address: item.Address || "",
+          chargerType: item.chargerType || "",
         }));
 
         setChargers(markers);
-        setChargerData(data);
-
-        if (savedLocation) {
-          setLocation(JSON.parse(savedLocation));
-        }
       } catch (error) {
         console.error("Failed to load chargers from backend:", error);
       } finally {
         setLoading(false);
       }
     })();
-  }, [chargerData]);
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -130,7 +156,7 @@ export default function HomeScreen() {
               longitudeDelta: 0.0421,
             }}
             showsUserLocation={true}
-            showsTraffic={true}
+            // showsTraffic={true}
             showsMyLocationButton={true}
           >
             {chargers.map((charger, index) => (
@@ -141,7 +167,7 @@ export default function HomeScreen() {
                   longitude: charger.longitude,
                 }}
                 title={charger.ownerName || "Charger"}
-                description={`Lat: ${charger.address}, Lng: ${charger.chargerType}`}
+                onPress={() => handleMarkerPress(charger)}
               >
                 <View style={styles.markerIcon}>
                   <FontAwesome5
@@ -154,6 +180,17 @@ export default function HomeScreen() {
             ))}
           </MapView>
         )}
+        <ProfileActionSheet
+          ref={actionSheetRef}
+          user={selectedUser}
+          onConnect={() => {
+            actionSheetRef.current?.hide();
+            Alert.alert("Connected with", selectedUser?.ownerName || "Charger");
+          }}
+          onClose={() => {
+            actionSheetRef.current?.hide();
+          }}
+        />
       </View>
     </View>
   );
