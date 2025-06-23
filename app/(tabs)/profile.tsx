@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { statsData, iconComponents, menuSections } from "@/data";
+import { colors } from "@/src/constants/colors";
 export default function ProfileScreen() {
   return (
     <ScrollView style={styles.container}>
@@ -23,7 +24,7 @@ export default function ProfileScreen() {
               style={styles.profileImage}
             />
             <TouchableOpacity style={styles.editImageButton}>
-              <Ionicons name="camera" size={20} color="#2E7D32" />
+              <Ionicons name="camera" size={20} color={colors.forestGreen} />
             </TouchableOpacity>
           </View>
           <Text style={styles.name}>John Doe</Text>
@@ -39,7 +40,11 @@ export default function ProfileScreen() {
           return (
             <View key={index} style={styles.statItem}>
               <View style={styles.statIconContainer}>
-                <IconComponent name={item.iconName} size={20} color="#2E7D32" />
+                <IconComponent
+                  name={item.iconName}
+                  size={20}
+                  color={colors.forestGreen}
+                />
               </View>
               <Text style={styles.statNumber}>{item.value}</Text>
               <Text style={styles.statLabel}>{item.label}</Text>
@@ -83,7 +88,11 @@ export default function ProfileScreen() {
                     </Text>
                   </View>
                   {!item.isLogout && (
-                    <Ionicons name="chevron-forward" size={24} color="#666" />
+                    <Ionicons
+                      name="chevron-forward"
+                      size={24}
+                      color={colors.mediumGrey}
+                    />
                   )}
                 </TouchableOpacity>
               );
@@ -98,10 +107,10 @@ export default function ProfileScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: colors.lightGrey,
   },
   headerBackground: {
-    backgroundColor: "#4CAF50",
+    backgroundColor: colors.emeraldGreen,
     paddingTop: Platform.OS === "ios" ? 80 : 60,
     paddingBottom: 40,
   },
@@ -117,37 +126,37 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 50,
     borderWidth: 3,
-    borderColor: "#FFFFFF",
+    borderColor: colors.white,
   },
   editImageButton: {
     position: "absolute",
     right: 0,
     bottom: 0,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: colors.white,
     borderRadius: 15,
     padding: 8,
     borderWidth: 2,
-    borderColor: "#2E7D32",
+    borderColor: colors.forestGreen,
   },
   name: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#FFFFFF",
+    color: colors.white,
     marginBottom: 5,
   },
   email: {
     fontSize: 16,
-    color: "#FFFFFF",
+    color: colors.white,
     opacity: 0.9,
   },
   statsContainer: {
     flexDirection: "row",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: colors.white,
     marginTop: -30,
     marginHorizontal: 20,
     padding: 20,
     borderRadius: 15,
-    shadowColor: "#000",
+    shadowColor: colors.black,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -164,7 +173,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: "#E8F5E9",
+    backgroundColor: colors.lightGreenBg,
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 8,
@@ -172,12 +181,12 @@ const styles = StyleSheet.create({
   statNumber: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "#2E7D32",
+    color: colors.forestGreen,
     marginBottom: 5,
   },
   statLabel: {
     fontSize: 14,
-    color: "#666",
+    color: colors.mediumGrey,
   },
   menuContainer: {
     padding: 20,
@@ -188,7 +197,7 @@ const styles = StyleSheet.create({
   menuSectionTitle: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#666",
+    color: colors.mediumGrey,
     marginBottom: 15,
     marginLeft: 15,
   },
@@ -196,11 +205,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: colors.white,
     padding: 15,
     borderRadius: 10,
     marginBottom: 10,
-    shadowColor: "#000",
+    shadowColor: colors.black,
     shadowOffset: {
       width: 0,
       height: 1,
@@ -217,19 +226,19 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: "#E8F5E9",
+    backgroundColor: colors.lightGreenBg,
     justifyContent: "center",
     alignItems: "center",
     marginRight: 15,
   },
   menuItemText: {
     fontSize: 16,
-    color: "#333",
+    color: colors.veryDarkGrey,
   },
   logoutButton: {
     marginTop: 10,
   },
   logoutText: {
-    color: "#FF3B30",
+    color: colors.errorRed,
   },
 });

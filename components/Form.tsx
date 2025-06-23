@@ -1,8 +1,22 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import FormField from "./FormField";
+import { colors } from "@/src/constants/colors";
 
-const Form = ({ fields, values, onChange, onSubmit }) => {
+type Field = {
+  name: string;
+  label: string;
+  placeholder: string;
+};
+
+type Props = {
+  fields: Field[];
+  values: { [key: string]: string };
+  onChange: (name: string, value: string) => void;
+  onSubmit: () => void;
+};
+
+const Form: React.FC<Props> = ({ fields, values, onChange, onSubmit }) => {
   return (
     <View>
       {fields.map((field) => (
@@ -10,7 +24,7 @@ const Form = ({ fields, values, onChange, onSubmit }) => {
           key={field.name}
           label={field.label}
           value={values[field.name]}
-          onChangeText={(text) => onChange(field.name, text)}
+          onChangeText={(text: string) => onChange(field.name, text)}
           placeholder={field.placeholder}
         />
       ))}
@@ -23,7 +37,7 @@ const Form = ({ fields, values, onChange, onSubmit }) => {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: "#4CAF50",
+    backgroundColor: colors.emeraldGreen,
     height: 48,
     borderRadius: 8,
     justifyContent: "center",
@@ -31,7 +45,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   buttonText: {
-    color: "#fff",
+    color: colors.white,
     fontSize: 16,
     fontWeight: "600",
   },

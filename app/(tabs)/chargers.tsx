@@ -1,7 +1,7 @@
 import ChargerListing from "@/components/ChargerListing";
+import ListChargers from "@/components/ListChargers";
 import React from "react";
-import { Text, View } from "react-native";
 
 export default function chargers() {
-  return <ChargerListing />;
+  return <ListChargers />;
 }

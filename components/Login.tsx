@@ -1,165 +1,124 @@
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  SafeAreaView,
-  Image,
-} from "react-native";
-import { AntDesign } from '@expo/vector-icons';
+import React, { useEffect } from "react";
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import * as WebBrowser from "expo-web-browser";
+import * as Google from "expo-auth-session/providers/google";
+import * as AuthSession from "expo-auth-session";
+import { auth } from "@/firebase";
+import { Ionicons } from "@expo/vector-icons";
+import { GoogleAuthProvider, signInWithCredential } from "firebase/auth";
+import { colors } from "@/src/constants/colors";
 
-export default function Login({ navigation }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleLogin = () => {
-    // Handle login logic here
-    console.log("Login pressed", { email, password });
-  };
-
-  const handleGoogleLogin = () => {
-    // Handle Google login logic here
-    console.log("Google login pressed");
-  };
+WebBrowser.maybeCompleteAuthSession();
+const redirectUri = AuthSession.makeRedirectUri({ useProxy: true });
+export default function Login() {
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    clientId:
+      "582241536958-daqrl3narrkvjmvqru5pa6fndn58cn1g.apps.googleusercontent.com",
+    redirectUri,
+  });
+  useEffect(() => {
+    if (response?.type === "success" && response.authentication?.idToken) {
+      // const { id_token } = response.authentication || {};
+      // if (id_token) {
+      // const credential = GoogleAuthProvider.credential(id_token);
+      const credential = GoogleAuthProvider.credential(
+        response.authentication.idToken
+      );
+      signInWithCredential(auth, credential)
+        .then((userCredential) => {
+          console.log("Firebase login successful:", userCredential.user);
+        })
+        .catch((error) => {
+          console.error("Firebase login error:", error);
+          Alert.alert("Firebase Auth Error", error.message);
+        });
+      // }
+    }
+  }, [response]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.formContainer}>
-        <Text style={styles.title}>Welcome Back</Text>
-        <Text style={styles.subtitle}>Please sign in to continue</Text>
-
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Email"
-            value={email}
-            onChangeText={setEmail}
-            keyboardType="email-address"
-            autoCapitalize="none"
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Password"
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry
-          />
-        </View>
-
-        <TouchableOpacity style={styles.button} onPress={handleLogin}>
-          <Text style={styles.buttonText}>Sign In</Text>
-        </TouchableOpacity>
-
-        <View style={styles.dividerContainer}>
-          <View style={styles.divider} />
-          <Text style={styles.dividerText}>OR</Text>
-          <View style={styles.divider} />
-        </View>
-
-        <TouchableOpacity style={styles.googleButton} onPress={handleGoogleLogin}>
-          <AntDesign name="google" size={24} color="#666666" />
-          <Text style={styles.googleButtonText}>Sign in with Google</Text>
-        </TouchableOpacity>
-
-        <View style={styles.signupContainer}>
-          <Text style={styles.signupText}>Don't have an account? </Text>
-          <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-            <Text style={styles.signupLink}>Sign Up</Text>
-          </TouchableOpacity>
-        </View>
+    <View style={[styles.container, { backgroundColor: colors.lightGrey }]}>
+      <View style={[styles.header, { backgroundColor: colors.emeraldGreen }]}>
+        <Text
+          style={[
+            styles.title,
+            {
+              color: colors.white,
+            },
+          ]}
+        >
+          Welcome to OpenPlug
+        </Text>
       </View>
-    </SafeAreaView>
+
+      <View
+        style={[
+          styles.formContainer,
+          { backgroundColor: colors.white, shadowColor: colors.black },
+        ]}
+      >
+        <TouchableOpacity
+          style={[
+            styles.googleButton,
+            { backgroundColor: colors.emeraldGreen },
+          ]}
+          disabled={!request}
+          onPress={() => promptAsync()}
+        >
+          <Ionicons name="logo-google" size={20} color={colors.white} />
+          <Text
+            style={[
+              styles.googleButtonText,
+              {
+                color: colors.white,
+              },
+            ]}
+          >
+            Continue with Google
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#ffffff",
-  },
-  formContainer: {
-    flex: 1,
-    padding: 20,
-    justifyContent: "center",
+  container: { flex: 1 },
+  header: {
+    paddingTop: 60,
+    paddingBottom: 40,
+    paddingHorizontal: 20,
+    height: "80%",
   },
   title: {
-    fontSize: 32,
+    fontSize: 28,
     fontWeight: "bold",
-    color: "#2E7D32",
     marginBottom: 8,
   },
-  subtitle: {
-    fontSize: 16,
-    color: "#666",
-    marginBottom: 32,
-  },
-  inputContainer: {
-    marginBottom: 24,
-  },
-  input: {
-    backgroundColor: "#f5f5f5",
-    padding: 16,
-    borderRadius: 8,
-    marginBottom: 16,
-    fontSize: 16,
-  },
-  button: {
-    backgroundColor: "#2E7D32",
-    padding: 16,
-    borderRadius: 8,
-    alignItems: "center",
-  },
-  buttonText: {
-    color: "#ffffff",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  dividerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 20,
-  },
-  divider: {
-    flex: 1,
-    height: 1,
-    backgroundColor: '#E0E0E0',
-  },
-  dividerText: {
-    marginHorizontal: 10,
-    color: '#666',
-    fontSize: 14,
+  formContainer: {
+    marginTop: -30,
+    marginHorizontal: 20,
+    padding: 20,
+    borderRadius: 15,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   googleButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#ffffff',
-    padding: 16,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#E0E0E0',
-    marginBottom: 20,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 15,
+    borderRadius: 10,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   googleButtonText: {
-    marginLeft: 12,
     fontSize: 16,
-    color: '#333',
-    fontWeight: '500',
-  },
-  signupContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 20,
-  },
-  signupText: {
-    color: '#666',
-    fontSize: 14,
-  },
-  signupLink: {
-    color: '#2E7D32',
-    fontSize: 14,
-    fontWeight: 'bold',
+    fontWeight: "600",
+    marginLeft: 10,
   },
 });

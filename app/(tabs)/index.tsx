@@ -11,9 +11,9 @@ import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FontAwesome5 } from "@expo/vector-icons";
-import ActionSheet from "react-native-actions-sheet";
 import APIManager from "@/APIManager";
 import ProfileActionSheet from "@/components/ProfileActionSheet";
+import { colors } from "@/src/constants/colors";
 
 export default function HomeScreen() {
   const [location, setLocation] = useState<Location.LocationObject | null>(
@@ -23,11 +23,10 @@ export default function HomeScreen() {
     { latitude: number; longitude: number; ownerName?: string }[]
   >([]);
   const [loading, setLoading] = useState(true);
-  const [showSheet, setShowSheet] = useState(false);
   const actionSheetRef = useRef<ActionSheet>(null);
   const [selectedUser, setSelectedUser] = useState<any>(null);
 
-  const handleMarkerPress = (charger: any) => {
+  const handleMarkerPress = (charger: ChargerDoc) => {
     setSelectedUser(charger);
     actionSheetRef.current?.show();
   };
@@ -35,29 +34,6 @@ export default function HomeScreen() {
   useEffect(() => {
     (async () => {
       try {
-        // const savedLocation = await AsyncStorage.getItem("userLocation");
-        // const resp = await axios.get("http://192.168.7.60:3001/charger");
-        // const data = resp.data;
-        // const markers = data.map((item: any) => ({
-        //   latitude:
-        //     typeof item.latitude === "string"
-        //       ? parseFloat(item.latitude)
-        //       : item.latitude,
-        //   longitude:
-        //     typeof item.longitude === "string"
-        //       ? parseFloat(item.longitude)
-        //       : item.longitude,
-        //   ownerName: item.ownerName || "Charger",
-        //   address: item.Address || "", // optional if you use description
-        //   chargerType: item.chargerType || "", // optional if you use description
-        // }));
-
-        // setChargers(markers);
-        // setChargerData(data);
-
-        // if (savedLocation) {
-        //   setLocation(JSON.parse(savedLocation));
-        // }
         const data = await APIManager.getChargers();
         const markers = data.map((item: any) => ({
           latitude:
@@ -81,7 +57,6 @@ export default function HomeScreen() {
       }
     })();
   }, []);
-
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -102,41 +77,41 @@ export default function HomeScreen() {
     })();
   }, []);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const chargerStations = await AsyncStorage.getItem("chargerFormData");
-        if (chargerStations) {
-          const parsed = JSON.parse(chargerStations);
-          const chargerArray = Array.isArray(parsed) ? parsed : [parsed];
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       const chargerStations = await AsyncStorage.getItem("chargerFormData");
+  //       if (chargerStations) {
+  //         const parsed = JSON.parse(chargerStations);
+  //         const chargerArray = Array.isArray(parsed) ? parsed : [parsed];
 
-          const markers = chargerArray.map((item) => {
-            const latitude =
-              typeof item.latitude === "string"
-                ? parseFloat(item.latitude)
-                : item.location?.latitude ?? 0;
+  //         const markers = chargerArray.map((item) => {
+  //           const latitude =
+  //             typeof item.latitude === "string"
+  //               ? parseFloat(item.latitude)
+  //               : item.location?.latitude ?? 0;
 
-            const longitude =
-              typeof item.longitude === "string"
-                ? parseFloat(item.longitude)
-                : item.location?.longitude ?? 0;
+  //           const longitude =
+  //             typeof item.longitude === "string"
+  //               ? parseFloat(item.longitude)
+  //               : item.location?.longitude ?? 0;
 
-            return {
-              latitude,
-              longitude,
-              ownerName: item.ownerName || "Charger",
-            };
-          });
+  //           return {
+  //             latitude,
+  //             longitude,
+  //             ownerName: item.ownerName || "Charger",
+  //           };
+  //         });
 
-          setChargers(markers);
-        }
-      } catch (error) {
-        console.error("Error loading charger data:", error);
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, []);
+  //         setChargers(markers);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error loading charger data:", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   })();
+  // }, []);
 
   const latitude = location?.coords?.latitude || 17.385;
   const longitude = location?.coords?.longitude || 78.4867;
@@ -145,7 +120,11 @@ export default function HomeScreen() {
     <View style={styles.container}>
       <View style={styles.mapContainer}>
         {loading ? (
-          <ActivityIndicator size="large" color="#4CAF50" />
+          <ActivityIndicator
+            size="large"
+            color={colors.emeraldGreen}
+            style={styles.container}
+          />
         ) : (
           <MapView
             style={styles.map}
@@ -156,7 +135,6 @@ export default function HomeScreen() {
               longitudeDelta: 0.0421,
             }}
             showsUserLocation={true}
-            // showsTraffic={true}
             showsMyLocationButton={true}
           >
             {chargers.map((charger, index) => (
@@ -199,15 +177,15 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: colors.white,
   },
   markerIcon: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.white,
     padding: 4,
     borderRadius: 50,
     alignItems: "center",
     justifyContent: "center",
-    shadowColor: "#000",
+    shadowColor: colors.black,
     shadowOffset: { width: 20, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 2,
