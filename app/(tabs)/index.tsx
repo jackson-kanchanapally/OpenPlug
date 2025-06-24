@@ -14,6 +14,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import APIManager from "@/APIManager";
 import ProfileActionSheet from "@/components/ProfileActionSheet";
 import { colors } from "@/src/constants/colors";
+import { router } from "expo-router";
 
 export default function HomeScreen() {
   const [location, setLocation] = useState<Location.LocationObject | null>(
@@ -25,7 +26,6 @@ export default function HomeScreen() {
   const [loading, setLoading] = useState(true);
   const actionSheetRef = useRef<ActionSheet>(null);
   const [selectedUser, setSelectedUser] = useState<any>(null);
-
   const handleMarkerPress = (charger: ChargerDoc) => {
     setSelectedUser(charger);
     actionSheetRef.current?.show();
@@ -151,7 +151,7 @@ export default function HomeScreen() {
                   <FontAwesome5
                     name="charging-station"
                     size={28}
-                    color="#4CAF50"
+                    color={colors.emeraldGreen}
                   />
                 </View>
               </Marker>
@@ -163,7 +163,12 @@ export default function HomeScreen() {
           user={selectedUser}
           onConnect={() => {
             actionSheetRef.current?.hide();
-            Alert.alert("Connected with", selectedUser?.ownerName || "Charger");
+            router.push({
+              pathname: "/chargerInfo",
+              params: {
+                charger: JSON.stringify(selectedUser),
+              },
+            });
           }}
           onClose={() => {
             actionSheetRef.current?.hide();

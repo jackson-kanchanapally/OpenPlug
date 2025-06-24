@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -8,37 +8,34 @@ import {
   ScrollView,
   Platform,
   Image,
-} from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { StatusBar } from 'expo-status-bar';
-import { Link } from 'expo-router';
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { StatusBar } from "expo-status-bar";
+import { Link } from "expo-router";
 
-type UserType = 'consumer' | 'provider' | 'both';
+type UserType = "consumer" | "provider" | "both";
 
 export default function SignupScreen() {
-  const [userType, setUserType] = useState<UserType>('consumer');
+  const [userType, setUserType] = useState<UserType>("consumer");
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    phone: '',
-    address: '',
-    // Provider specific fields
-    businessName: '',
-    businessAddress: '',
-    businessPhone: '',
-    chargerType: '',
-    availableHours: '',
-    pricePerHour: '',
-    // Additional fields for both
-    vehicleType: '',
-    licensePlate: '',
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    phone: "",
+    address: "",
+    businessName: "",
+    businessAddress: "",
+    businessPhone: "",
+    chargerType: "",
+    availableHours: "",
+    pricePerHour: "",
+    vehicleType: "",
+    licensePlate: "",
   });
 
   const handleSignup = () => {
-    // Handle signup logic here
-    console.log('Signup data:', { userType, ...formData });
+    console.log("Signup data:", { userType, ...formData });
   };
 
   const renderUserTypeSelector = () => (
@@ -48,24 +45,28 @@ export default function SignupScreen() {
         <TouchableOpacity
           style={[
             styles.userTypeButton,
-            userType === 'consumer' && styles.userTypeButtonActive,
+            userType === "consumer" && styles.userTypeButtonActive,
           ]}
-          onPress={() => setUserType('consumer')}
+          onPress={() => setUserType("consumer")}
         >
-          <View style={[
-            styles.iconContainer,
-            userType === 'consumer' && styles.iconContainerActive
-          ]}>
+          <View
+            style={[
+              styles.iconContainer,
+              userType === "consumer" && styles.iconContainerActive,
+            ]}
+          >
             <Ionicons
               name="car-outline"
               size={24}
-              color={userType === 'consumer' ? '#2E7D32' : '#2E7D32'}
+              color={userType === "consumer" ? "#2E7D32" : "#2E7D32"}
             />
           </View>
-          <Text style={[
-            styles.userTypeButtonText,
-            userType === 'consumer' && styles.userTypeButtonTextActive,
-          ]}>
+          <Text
+            style={[
+              styles.userTypeButtonText,
+              userType === "consumer" && styles.userTypeButtonTextActive,
+            ]}
+          >
             Use Chargers
           </Text>
         </TouchableOpacity>
@@ -73,24 +74,28 @@ export default function SignupScreen() {
         <TouchableOpacity
           style={[
             styles.userTypeButton,
-            userType === 'provider' && styles.userTypeButtonActive,
+            userType === "provider" && styles.userTypeButtonActive,
           ]}
-          onPress={() => setUserType('provider')}
+          onPress={() => setUserType("provider")}
         >
-          <View style={[
-            styles.iconContainer,
-            userType === 'provider' && styles.iconContainerActive
-          ]}>
+          <View
+            style={[
+              styles.iconContainer,
+              userType === "provider" && styles.iconContainerActive,
+            ]}
+          >
             <Ionicons
               name="flash"
               size={24}
-              color={userType === 'provider' ? '#2E7D32' : '#2E7D32'}
+              color={userType === "provider" ? "#2E7D32" : "#2E7D32"}
             />
           </View>
-          <Text style={[
-            styles.userTypeButtonText,
-            userType === 'provider' && styles.userTypeButtonTextActive,
-          ]}>
+          <Text
+            style={[
+              styles.userTypeButtonText,
+              userType === "provider" && styles.userTypeButtonTextActive,
+            ]}
+          >
             Share Charger
           </Text>
         </TouchableOpacity>
@@ -98,24 +103,28 @@ export default function SignupScreen() {
         <TouchableOpacity
           style={[
             styles.userTypeButton,
-            userType === 'both' && styles.userTypeButtonActive,
+            userType === "both" && styles.userTypeButtonActive,
           ]}
-          onPress={() => setUserType('both')}
+          onPress={() => setUserType("both")}
         >
-          <View style={[
-            styles.iconContainer,
-            userType === 'both' && styles.iconContainerActive
-          ]}>
+          <View
+            style={[
+              styles.iconContainer,
+              userType === "both" && styles.iconContainerActive,
+            ]}
+          >
             <Ionicons
               name="swap-horizontal"
               size={24}
-              color={userType === 'both' ? '#2E7D32' : '#2E7D32'}
+              color={userType === "both" ? "#2E7D32" : "#2E7D32"}
             />
           </View>
-          <Text style={[
-            styles.userTypeButtonText,
-            userType === 'both' && styles.userTypeButtonTextActive,
-          ]}>
+          <Text
+            style={[
+              styles.userTypeButtonText,
+              userType === "both" && styles.userTypeButtonTextActive,
+            ]}
+          >
             Both
           </Text>
         </TouchableOpacity>
@@ -136,7 +145,9 @@ export default function SignupScreen() {
         style={styles.input}
         placeholder="Vechile Number "
         value={formData.licensePlate}
-        onChangeText={(text) => setFormData({ ...formData, licensePlate: text })}
+        onChangeText={(text) =>
+          setFormData({ ...formData, licensePlate: text })
+        }
       />
     </View>
   );
@@ -154,17 +165,22 @@ export default function SignupScreen() {
         style={styles.input}
         placeholder="Available Hours (e.g., 9 AM - 5 PM)"
         value={formData.availableHours}
-        onChangeText={(text) => setFormData({ ...formData, availableHours: text })}
+        onChangeText={(text) =>
+          setFormData({ ...formData, availableHours: text })
+        }
       />
       <TextInput
         style={styles.input}
         placeholder="Price per Hour ($)"
         value={formData.pricePerHour}
-        onChangeText={(text) => setFormData({ ...formData, pricePerHour: text })}
+        onChangeText={(text) =>
+          setFormData({ ...formData, pricePerHour: text })
+        }
         keyboardType="numeric"
       />
       <Text style={styles.infoText}>
-        By listing your home charger, you agree to share your charging facility with other EV owners in the community.
+        By listing your home charger, you agree to share your charging facility
+        with other EV owners in the community.
       </Text>
     </View>
   );
@@ -172,10 +188,10 @@ export default function SignupScreen() {
   return (
     <ScrollView style={styles.container}>
       <StatusBar style="light" backgroundColor="#2E7D32" />
-      
+
       <View style={styles.header}>
         <Image
-          source={require('../assets/images/react-logo.png')}
+          source="https://www.google.com/url?sa=i&url=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fimage&psig=AOvVaw0VdMkp7_n5TVb9ywWnBgRA&ust=1750828201638000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCKiF-LmliY4DFQAAAAAdAAAAABAE"
           style={styles.logo}
         />
         <Text style={styles.title}>Create Account</Text>
@@ -224,13 +240,17 @@ export default function SignupScreen() {
           style={styles.input}
           placeholder="Confirm Password"
           value={formData.confirmPassword}
-          onChangeText={(text) => setFormData({ ...formData, confirmPassword: text })}
+          onChangeText={(text) =>
+            setFormData({ ...formData, confirmPassword: text })
+          }
           secureTextEntry
         />
       </View>
 
-      {(userType === 'consumer' || userType === 'both') && renderConsumerFields()}
-      {(userType === 'provider' || userType === 'both') && renderProviderFields()}
+      {(userType === "consumer" || userType === "both") &&
+        renderConsumerFields()}
+      {(userType === "provider" || userType === "both") &&
+        renderProviderFields()}
 
       <TouchableOpacity style={styles.signupButton} onPress={handleSignup}>
         <Text style={styles.signupButtonText}>Create Account</Text>
@@ -251,13 +271,13 @@ export default function SignupScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: "#f5f5f5",
   },
   header: {
-    backgroundColor: '#2E7D32',
-    paddingTop: Platform.OS === 'ios' ? 60 : 40,
+    backgroundColor: "#2E7D32",
+    paddingTop: Platform.OS === "ios" ? 60 : 40,
     paddingBottom: 40,
-    alignItems: 'center',
+    alignItems: "center",
   },
   logo: {
     width: 80,
@@ -267,22 +287,22 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 28,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
+    fontWeight: "bold",
+    color: "#FFFFFF",
     marginBottom: 8,
   },
   subtitle: {
     fontSize: 16,
-    color: '#FFFFFF',
+    color: "#FFFFFF",
     opacity: 0.9,
   },
   userTypeContainer: {
     padding: 20,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
     marginTop: -30,
     marginHorizontal: 20,
     borderRadius: 15,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -293,54 +313,54 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 18,
-    fontWeight: '600',
-    color: '#333',
+    fontWeight: "600",
+    color: "#333",
     marginBottom: 15,
   },
   userTypeButtons: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     gap: 10,
   },
   userTypeButton: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     padding: 10,
     borderRadius: 15,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
   },
   userTypeButtonActive: {
-    backgroundColor: '#E8F5E9',
+    backgroundColor: "#E8F5E9",
   },
   iconContainer: {
     width: 50,
     height: 50,
     borderRadius: 25,
-    backgroundColor: '#E8F5E9',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "#E8F5E9",
+    justifyContent: "center",
+    alignItems: "center",
     marginBottom: 8,
   },
   iconContainerActive: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
   },
   userTypeButtonText: {
     fontSize: 12,
-    color: '#2E7D32',
-    fontWeight: '500',
-    textAlign: 'center',
+    color: "#2E7D32",
+    fontWeight: "500",
+    textAlign: "center",
   },
   userTypeButtonTextActive: {
-    color: '#2E7D32',
+    color: "#2E7D32",
   },
   formSection: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
     marginHorizontal: 20,
     marginTop: 20,
     padding: 20,
     borderRadius: 15,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -350,45 +370,45 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   input: {
-    backgroundColor: '#f5f5f5',
+    backgroundColor: "#f5f5f5",
     padding: 15,
     borderRadius: 10,
     marginBottom: 15,
     fontSize: 16,
   },
   signupButton: {
-    backgroundColor: '#2E7D32',
+    backgroundColor: "#2E7D32",
     marginHorizontal: 20,
     marginTop: 20,
     marginBottom: 20,
     padding: 15,
     borderRadius: 10,
-    alignItems: 'center',
+    alignItems: "center",
   },
   signupButtonText: {
-    color: '#FFFFFF',
+    color: "#FFFFFF",
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   loginContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
     marginBottom: 30,
   },
   loginText: {
-    color: '#666',
+    color: "#666",
     fontSize: 16,
   },
   loginLink: {
-    color: '#2E7D32',
+    color: "#2E7D32",
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   infoText: {
     fontSize: 14,
-    color: '#666',
-    fontStyle: 'italic',
+    color: "#666",
+    fontStyle: "italic",
     marginTop: 10,
     lineHeight: 20,
   },
-}); 
+});

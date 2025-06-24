@@ -5,11 +5,14 @@ import {
   StyleSheet,
   ScrollView,
   ActivityIndicator,
+  TouchableOpacity,
 } from "react-native";
 import * as Location from "expo-location";
 import { StatusBar } from "expo-status-bar";
 import { colors } from "@/src/constants/colors";
 import APIManager from "@/APIManager";
+import Feather from "@expo/vector-icons/Feather";
+import { router } from "expo-router";
 
 type Charger = {
   id: string;
@@ -105,21 +108,42 @@ export default function ListChargers() {
             style={styles.loader}
           />
         ) : chargers.length > 0 ? (
-          chargers.map((charger) => (
-            <View key={charger.id} style={styles.chargerCard}>
-              <Text style={styles.chargerTitle}>
-                {charger.ownerName ?? "Charger"}
-              </Text>
-              {charger.Address && (
-                <Text style={styles.chargerAddress}>{charger.Address}</Text>
-              )}
-              {charger.distance !== undefined && (
-                <Text style={styles.distanceText}>
-                  📍 {charger.distance.toFixed(2)} km away
+          <View style={styles.con}>
+            {chargers.map((charger) => (
+              <TouchableOpacity key={charger.id} style={styles.chargerCard}>
+                <Text style={styles.chargerTitle}>
+                  {charger.ownerName ?? "Charger"}
                 </Text>
-              )}
-            </View>
-          ))
+                {charger.Address && (
+                  <Text style={styles.chargerAddress}>{charger.Address}</Text>
+                )}
+                <View style={styles.connectView}>
+                  {charger.distance !== undefined && (
+                    <Text style={styles.distanceText}>
+                      📍 {charger.distance.toFixed(2)} km away
+                    </Text>
+                  )}
+                  <TouchableOpacity
+                    style={styles.connectBtn}
+                    onPress={() => {
+                      router.push({
+                        pathname: "/chargerInfo",
+                        params: { charger: JSON.stringify(charger) },
+                      });
+                    }}
+                  >
+                    <Text style={styles.connectBtnTxt}>Connect</Text>
+                    <Feather
+                      name="arrow-up-right"
+                      size={16}
+                      color={colors.white}
+                    />
+                  </TouchableOpacity>
+                </View>
+              </TouchableOpacity>
+            ))}
+            <Text style={styles.thatsAllText}>Thats all you got...</Text>
+          </View>
         ) : (
           <Text style={styles.noChargersText}>No chargers found.</Text>
         )}
@@ -132,6 +156,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.lightGrey,
+  },
+  con: {
+    backgroundColor: colors.white,
+    padding: 5,
+    borderRadius: 12,
+    shadowColor: colors.black,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 2,
   },
   header: {
     backgroundColor: colors.emeraldGreen,
@@ -162,14 +196,9 @@ const styles = StyleSheet.create({
   },
   chargerCard: {
     backgroundColor: colors.white,
-    // borderRadius: 12,
     padding: 16,
-    // marginVertical: 8,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 2,
+    borderBottomColor: colors.lightGrey,
+    borderBottomWidth: 2,
   },
   chargerTitle: {
     fontSize: 18,
@@ -178,7 +207,7 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   chargerAddress: {
-    fontSize: 16,
+    fontSize: 14,
     color: colors.mediumGrey,
     marginBottom: 6,
   },
@@ -191,5 +220,33 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 40,
     color: colors.mediumGrey,
+  },
+  thatsAllText: {
+    fontSize: 15,
+    textAlign: "center",
+    padding: 14,
+    color: colors.mediumGrey,
+  },
+  connectView: {
+    flexDirection: "row",
+    alignItems: "center",
+    height: 20,
+    justifyContent: "space-between",
+    marginRight: 5,
+    marginTop: 10,
+  },
+  connectBtn: {
+    flexDirection: "row",
+    backgroundColor: colors.emeraldGreen,
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 20,
+    height: 25,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  connectBtnTxt: {
+    fontSize: 14,
+    color: colors.white,
   },
 });
