@@ -1,24 +1,22 @@
 {
   "expo": {
-    "name": "OpenPlug",
-    "slug": "OpenPlug",
+    "name": "OpenPlugRedesign",
+    "slug": "OpenPlugRedesign",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "openplugredesign",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true
     },
     "android": {
-      "permissions": [
-        "INTERNET"
-      ],
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "edgeToEdgeEnabled": true
     },
     "web": {
       "bundler": "metro",
@@ -39,15 +37,6 @@
     ],
     "experiments": {
       "typedRoutes": true
-    },
-    "extra": {
-      "router": {
-        "origin": false
-      },
-      "eas": {
-        "projectId": "9eb3861e-063d-4db7-9406-a02b61b0c9a8"
-      }
-    },
-    "owner": "jacksonmintu07"
+    }
   }
 }
