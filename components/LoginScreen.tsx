@@ -1,117 +1,81 @@
+import React from "react";
 import {
-  Image,
+  Dimensions,
+  ImageBackground,
+  Platform,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
-import Header from "./Header";
-
+import Button from "./custom/Button";
+import InputField from "./custom/InputField";
+const { width, height } = Dimensions.get("window");
 const WelcomeScreen = () => {
   return (
-    <View style={styles.container}>
-      <Header />
-      <View style={styles.topSection}>
-        <Image
-          source={require("../assets/images/react-logo.png")}
-          style={styles.icon}
-          resizeMode="contain"
+    <ImageBackground
+      source={require("../assets/images/loginBg.png")}
+      style={styles.background}
+      resizeMode="cover"
+    >
+      <View style={styles.container}>
+        <Text style={styles.logoText}>OpenPlug</Text>
+
+        <InputField placeholder="Email address" iconName="mail-outline" />
+        <InputField
+          placeholder="Password"
+          iconName="lock-closed-outline"
+          secureTextEntry
         />
-      </View>
 
-      <View style={styles.bottomSection}>
-        <Text style={styles.welcomeText}>Welcome</Text>
-        <Text style={styles.subText}>Sign in to an account</Text>
-        <Text style={styles.hintText}>Please enter your phone number</Text>
+        <Button BtnText="SIGN IN" onPress={() => console.log("Signed In")} />
 
-        <View style={styles.inputContainer}>
-          <Text style={styles.countryCode}>+91</Text>
-          <TextInput
-            placeholder="Phone number"
-            keyboardType="number-pad"
-            style={styles.phoneInput}
-          />
-        </View>
-
-        <TouchableOpacity style={styles.continueButton}>
-          <Text style={styles.buttonText}>Continue</Text>
+        <TouchableOpacity>
+          <Text style={styles.forgotText}>Forgot password?</Text>
         </TouchableOpacity>
+
+        <View style={styles.socialContainer}>
+          <Text style={styles.socialIcon}>f</Text>
+          <Text style={styles.socialIcon}>t</Text>
+        </View>
       </View>
-    </View>
+    </ImageBackground>
   );
 };
-
-export default WelcomeScreen;
-
 const styles = StyleSheet.create({
-  container: {
+  background: {
     flex: 1,
-    backgroundColor: "#2C7BE5",
-  },
-  topSection: {
-    flex: 0.4,
-    backgroundColor: "#2C7BE5", // Bright blue
     justifyContent: "center",
     alignItems: "center",
   },
-  icon: {
-    width: 80,
-    height: 80,
-    tintColor: "white",
-  },
-  bottomSection: {
-    flex: 0.6,
+  container: {
+    width: "100%",
+    alignItems: "center",
     padding: 20,
-    backgroundColor: "white",
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
+    borderRadius: 12,
+    height: "100%",
+    paddingTop: Platform.OS === "ios" ? height * 0.15 : height * 0.2,
+    // marginTop: 250,
   },
-  welcomeText: {
-    fontSize: 26,
-    fontWeight: "bold",
-    marginBottom: 8,
-    color: "#000",
+  logoText: {
+    fontSize: width * 0.18,
+    fontWeight: "semibold",
+    color: "#FFFFFF",
+    marginBottom: height * 0.1,
   },
-  subText: {
-    fontSize: 16,
-    color: "#333",
-    marginBottom: 6,
+  forgotText: {
+    color: "#FFFFFF",
+    marginTop: height * 0.02,
   },
-  hintText: {
-    fontSize: 14,
-    color: "#6B7280",
-    marginBottom: 20,
-  },
-  inputContainer: {
+  socialContainer: {
     flexDirection: "row",
-    alignItems: "center",
-    borderColor: "#ccc",
-    borderWidth: 1,
-
-    paddingHorizontal: 12,
-    marginBottom: 20,
-    backgroundColor: "#F1F5F9",
+    marginTop: 24,
+    gap: 20,
   },
-  countryCode: {
-    fontSize: 16,
-    marginRight: 10,
-    color: "#111",
-  },
-  phoneInput: {
-    flex: 1,
-    fontSize: 16,
-    paddingVertical: 10,
-  },
-  continueButton: {
-    backgroundColor: "#2ECC71", // Green
-    paddingVertical: 14,
-    borderRadius: 8,
-    alignItems: "center",
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "600",
+  socialIcon: {
+    fontSize: 20,
+    color: "#FFFFFF",
   },
 });
+
+export default WelcomeScreen;
