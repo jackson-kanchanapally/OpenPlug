@@ -1,3 +1,4 @@
+import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Colors } from "../constants/Colors";
@@ -10,7 +11,7 @@ type HeaderProps = {
 };
 
 export default function Header({
-  title = "OpenPlug",
+  title,
   subtitle,
   onBack,
   showBack = false,
@@ -28,7 +29,11 @@ export default function Header({
           onPress={handleBack}
           hitSlop={{ top: 10, left: 10, right: 10, bottom: 10 }}
         >
-          <Text style={styles.backText}>{"\u2039"}</Text>
+          <Ionicons
+            name="arrow-back-outline"
+            size={28}
+            color={Colors.light.text}
+          />
         </TouchableOpacity>
       )}
       <Text style={styles.title}>{title}</Text>

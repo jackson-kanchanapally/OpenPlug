@@ -1,7 +1,5 @@
-import LoginScreen from "@/components/LoginScreen";
-
-const index = () => {
-  return <LoginScreen />;
+const HomeTab = () => {
+  return null; // Replace with your main tab content
 };
 
-export default index;
+export default HomeTab;

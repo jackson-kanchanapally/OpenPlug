@@ -15,14 +15,63 @@ export default function RootLayout() {
   if (!loaded) {
     // Async font loading only occurs in development.
     return null;
+    // <View style={{ flex: 1, backgroundColor: "red" }} />;
   }
-
+  const EmeraldTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+    },
+  };
   return (
     // <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-    <ThemeProvider value={DefaultTheme}>
+    <ThemeProvider value={EmeraldTheme}>
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        {/* <Stack.Screen name="(tabs)" options={{ headerShown: false }} /> */}
         <Stack.Screen name="+not-found" />
+        <Stack.Screen
+          name="login"
+          options={{
+            headerShown: false,
+            title: "Login",
+            animation: "none",
+          }}
+        />
+        <Stack.Screen
+          name="basicDetails"
+          options={{
+            headerShown: false,
+            animation: "none",
+          }}
+        />
+        <Stack.Screen
+          name="role"
+          options={{
+            headerShown: false,
+            animation: "none",
+          }}
+        />
+        <Stack.Screen
+          name="userDetails"
+          options={{
+            headerShown: false,
+            animation: "none",
+          }}
+        />
+        <Stack.Screen
+          name="providerDetails"
+          options={{
+            headerShown: false,
+            animation: "none",
+          }}
+        />
+        <Stack.Screen
+          name="onboardingSummary"
+          options={{
+            headerShown: false,
+            animation: "none",
+          }}
+        />
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>

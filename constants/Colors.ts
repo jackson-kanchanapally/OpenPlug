@@ -22,6 +22,7 @@ export const Colors = {
     white: "#FFFFFF",
     black: "#000000",
     darkGray: "#333333",
+    darkEmerald: "#094C43",
   },
   dark: {
     text: "#ECEDEE",
@@ -38,5 +39,6 @@ export const Colors = {
     white: "#FFFFFF",
     black: "#000000",
     darkGray: "#333333",
+    darkEmerald: "#094C43",
   },
 };
